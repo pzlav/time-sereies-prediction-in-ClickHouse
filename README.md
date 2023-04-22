@@ -24,11 +24,11 @@ Where:
 ### In the following sections, we will walk through the process of implementing this ARI-X model for thousand time-series in ClickHouse with a pair of querries.
 
 Lets start by creating a view with data for each time series in array. For test data we will use 5 last days of dataset. For training data we will use all data except last 5 days. We will use this view for training and testing our model.
-<img src="images/q1.png" width=75% height=75%>
+<img src="images/q1.png" width=60% height=60%>
  
 
 Now train our models and store then in a memory engine table.
-<img src="images/q2.png" width=75% height=75%>
+<img src="images/q2.png" width=60% height=60%>
 
 More comments and details about the code can be found in the code https://github.com/pzlav/time-sereies-prediction-in-ClickHouse
 
