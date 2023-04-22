@@ -24,11 +24,11 @@ Where:
 ### In the following sections, we will walk through the process of implementing this ARI-X model for thousand time-series in ClickHouse with a pair of querries.
 
 Lets start by creating a view with data for each time series in array. For test data we will use 5 last days of dataset. For training data we will use all data except last 5 days. We will use this view for training and testing our model.
-![](images/q1.png)
+<img src="images/q1.png" width=75% height=75%>
  
 
 Now train our models and store then in a memory engine table.
-![](images/q2.png)
+<img src="images/q2.png" width=75% height=75%>
 
 More comments and details about the code can be found in the code https://github.com/pzlav/time-sereies-prediction-in-ClickHouse
 
@@ -37,10 +37,12 @@ More comments and details about the code can be found in the code https://github
 ### Evaluation of the model
 
 Now that we have implemented our model in ClickHouse, it's essential to evaluate the quality of our predictions by comparing them to baseline models. To do this, we will calculate the Mean Squared Error (MSE) of our predictions and compare it with that of some simple baseline models, such as the naïve model and the moving average model.
-![](images/mse.png) 
+<img src="images/mse.png" width=75% height=75%>
+
 
 To provide a visual representation of our predictions, let's take a pair of stores and a pair of product families as an example. Upon plotting the actual sales data and our predictions, we can observe that our model fits the data reasonably well.
 ![](images/plot_pred.png)
+
 
 However, it's important to note that this approach has several limitations and assumptions, such as:
  - The ARIMA model assumes linearity, which may not always be appropriate for real-world time series data.
