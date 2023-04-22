@@ -37,7 +37,7 @@ More comments and details about the code can be found in the code https://github
 ### Evaluation of the model
 
 Now that we have implemented our model in ClickHouse, it's essential to evaluate the quality of our predictions by comparing them to baseline models. To do this, we will calculate the Mean Squared Error (MSE) of our predictions and compare it with that of some simple baseline models, such as the naïve model and the moving average model.
-<img src="images/mse.png" width=75% height=75%>
+<img src="images/mse.png" width=50% height=50%>
 
 
 To provide a visual representation of our predictions, let's take a pair of stores and a pair of product families as an example. Upon plotting the actual sales data and our predictions, we can observe that our model fits the data reasonably well.
