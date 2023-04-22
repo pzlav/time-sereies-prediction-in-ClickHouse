@@ -1,5 +1,6 @@
-##Time-series Prediction with the Speed of ClickHouse
+## Time-series Prediction with the Speed of ClickHouse
 
+![](images/logo2.png)
 
 Time series prediction is a widespread task in data analytics and machine learning, with diverse applications in various domains and a variety of approaches to address the challenges it poses. While modern deep learning approaches such as Long Short-Term Memory (LSTM) and other state-of-the-art techniques have become popular for time series prediction due to their high accuracy, sometimes they may not be the most convenient choice. For instance, you may not want to download large datasets from a database or cloud to a data scientist's laptop or other separate environment for analysis, as the amount of data and the number of different time series can be enormous. Moreover, in certain scenarios, you may not need the most accurate prediction model but rather a fast and scalable method that still provides reasonable results. So, why consider making time series predictions directly in the database?
 
@@ -22,7 +23,7 @@ There are thousands of time series in this dataset, making it a great candidate 
 Assume you have already train dataset from competition in `store_sales` table, create a view with data for each time series in array:
 
 
-
+https://github.com/pzlav/time-sereies-prediction-in-ClickHouse
  
 
 2. Create a memory engine table with our models:
