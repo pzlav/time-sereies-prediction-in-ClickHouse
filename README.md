@@ -10,17 +10,17 @@ In this article, we focus on the Kaggle dataset 'Store Sales', which contains sa
 https://www.kaggle.com/competitions/store-sales-time-series-forecasting/data
 
 There are thousands of time series in this dataset, making it a great candidate for demonstrating the effectiveness of ClickHouse in handling large-scale time series data. We will implement a ARIMA like model directly in ClickHouse using the stochasticLinearRegression function. ARIMA (Autoregressive Integrated Moving Average) models are popular in time series analysis and can be effective in making predictions with relatively low computational complexity. The ARI-X model adapts the autoregressive and differencing components from the ARIMA model and incorporates additional features describing the day of the week using one-hot encoding. This results in an ARIX(7,1,0) model, defined as follows:
-`y_t = y_t-1 + y_t-2 + y_t-3 + y_t-4 + y_t-5 + y_t-6 + y_t-7 + w_1 + w_2 + w_3 + w_4 + w_5 + w_6 + w_7 + e_t`
+
+`y_t = y_t-1 + y_t-2 + ... + y_t-7 + w_1 + w_2 + ... + w_7 + e_t`
 
 Where:
-
-y_t: The predicted value at time t.
-y_t-n: The value at time t-n, where n ranges from 1 to 7.
-w_i: One-hot encoded feature representing the day of the week (i = 1 to 7, corresponding to Monday through Sunday).
-e_t: The error term at time t.
-
+ - y_t: The predicted value at time t.
+ - y_t-n: The value at time t-n, where n ranges from 1 to 7.
+ - w_i: One-hot encoded feature representing the day of the week (i = 1 to 7, corresponding to Monday through Sunday).
+ - e_t: The error term at time t.
 
 
+---
 ### In the following sections, we will walk through the process of implementing this ARI-X model for thousand time-series in ClickHouse with a pair of querries.
 
 Lets start by creating a view with data for each time series in array. For test data we will use 5 last days of dataset. For training data we will use all data except last 5 days. We will use this view for training and testing our model.
@@ -29,10 +29,11 @@ Lets start by creating a view with data for each time series in array. For test 
 
 Now train our models and store then in a memory engine table.
 ![](images/q2.png)
+
 More comments and details about the code can be found in the code https://github.com/pzlav/time-sereies-prediction-in-ClickHouse
 
 
-
+---
 ### Evaluation of the model
 
 Now that we have implemented our model in ClickHouse, it's essential to evaluate the quality of our predictions by comparing them to baseline models. To do this, we will calculate the Mean Squared Error (MSE) of our predictions and compare it with that of some simple baseline models, such as the naïve model and the moving average model.
@@ -47,6 +48,6 @@ However, it's important to note that this approach has several limitations and a
  - The ARIMA model does not account for seasonality or other complex patterns that may be present in the data.
 
 
-
+---
 ### Conclusion
 In conclusion, this approach demonstrates the feasibility of performing time series predictions directly within ClickHouse using a simple ARIX model. While this approach may not be optimal for all applications, it offers a fast, scalable, and efficient alternative for handling massive datasets where high accuracy is not the primary goal. By understanding the limitations and assumptions of this method, data scientists and analysts can make informed decisions on whether this approach is suitable for their specific use cases.  
