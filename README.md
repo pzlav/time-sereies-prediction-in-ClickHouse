@@ -11,11 +11,14 @@ https://www.kaggle.com/competitions/store-sales-time-series-forecasting/data
 
 There are thousands of time series in this dataset, making it a great candidate for demonstrating the effectiveness of ClickHouse in handling large-scale time series data. We will implement a ARIMA like model directly in ClickHouse using the stochasticLinearRegression function. ARIMA (Autoregressive Integrated Moving Average) models are popular in time series analysis and can be effective in making predictions with relatively low computational complexity. The ARI-X model adapts the autoregressive and differencing components from the ARIMA model and incorporates additional features describing the day of the week using one-hot encoding. This results in an ARIX(7,1,0) model, defined as follows:
 
-`y_t = y_t-1 + y_t-2 + ... + y_t-7 + w_1 + w_2 + ... + w_7 + e_t`
+$$
+Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + ... + \phi_7 Y_{t-7} + \theta_1W_{t1} + \theta_1W_{t2} + ... + \theta_7W_{t7} + \epsilon_t
+$$
+
 
 Where:
- - y_t: The predicted value at time t.
- - y_t-n: The value at time t-n, where n ranges from 1 to 7.
+ - Y_t: The predicted value at time t.
+ - Y_t-n: The value at time t-n, where n ranges from 1 to 7.
  - w_i: One-hot encoded feature representing the day of the week (i = 1 to 7, corresponding to Monday through Sunday).
  - e_t: The error term at time t.
 
