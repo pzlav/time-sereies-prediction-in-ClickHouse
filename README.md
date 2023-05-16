@@ -2,14 +2,16 @@
 
 ![](images/logo2.png)
 
-Time series prediction is a widespread task in data analytics and machine learning, with diverse applications in various domains and a variety of approaches to address the challenges it poses. While modern deep learning approaches such as Long Short-Term Memory (LSTM) and other state-of-the-art techniques have become popular for time series prediction due to their high accuracy, sometimes they may not be the most convenient choice. For instance, you may not want to download large datasets from a database or cloud to a data scientist's laptop or other separate environment for analysis, as the amount of data and the number of different time series can be enormous. Moreover, in certain scenarios, you may not need the most accurate prediction model but rather a fast and scalable method that still provides reasonable results. So, why consider making time series predictions directly in the database?
+Time series prediction is a widespread task in data analytics and machine learning, with diverse applications in various domains and a variety of approaches to address the challenges it poses. While modern deep learning approaches such as Long Short-Term Memory (LSTM) and other state-of-the-art techniques have become popular for time series prediction due to their high accuracy, sometimes they may not be the most convenient choice. 
+
+Organizations often struggle with the complexity of managing large data sets that reside in databases or cloud storage and contain countless time series instances. Moving this data into a separate analytical environment is not only daunting, but also potentially disruptive. It can require the creation of new data pipelines, increasing the complexity and potential vulnerability of the system. In addition, as data volumes grow, the challenge of effective and efficient data management escalates. Another important consideration is time sensitivity. Organizations often need to generate forecasts quickly and may not have the luxury of time to transfer data and run models in programming environments such as Python. Therefore, the need for speed and scalability often outweighs the desire for flawless accuracy. Finally, cost is a critical factor. Organizations are looking to optimize resources and reduce expenses. By performing time series prediction directly in the database, they can potentially save the costs associated with data engineers and data scientists. This method eliminates the need for data transfer, leverages the inherent processing capabilities of the database, and may even reduce the need for specialized personnel. Given these factors, the proposition of making time series predictions directly in the database becomes compelling.
 
 ClickHouse is a columnar database management system designed for high-performance data analysis. In many real-world applications, the primary concern is not the highest possible prediction accuracy but rather a solution that is fast, scalable, and capable of handling massive datasets. That's where ClickHouse comes in. By leveraging the power of ClickHouse, we can perform time series prediction directly in the database, bypassing the need for additional tools and enabling faster results with minimal overhead.
 
 In this article, we focus on the Kaggle dataset 'Store Sales', which contains sales data for various stores and product families over time from 2013 to 2018. The dataset can be found at the following link:
 https://www.kaggle.com/competitions/store-sales-time-series-forecasting/data
 
-There are thousands of time series in this dataset, making it a great candidate for demonstrating the effectiveness of ClickHouse in handling large-scale time series data. We will implement a ARIMA like model directly in ClickHouse using the stochasticLinearRegression function. ARIMA (Autoregressive Integrated Moving Average) models are popular in time series analysis and can be effective in making predictions with relatively low computational complexity. The ARI-X model adapts the autoregressive and differencing components from the ARIMA model and incorporates additional features describing the day of the week using one-hot encoding. This results in an ARIX(7,1,0) model, defined as follows:
+There are thousands of time series in this dataset, making it a great candidate for demonstrating the effectiveness of ClickHouse in handling large-scale time series data. We will implement a ARIMA like model directly in ClickHouse using the `stochasticLinearRegression` function. ARIMA (Autoregressive Integrated Moving Average) models are popular in time series analysis and can be effective in making predictions with relatively low computational complexity. The ARI-X model adapts the autoregressive and differencing components from the ARIMA model and incorporates additional features describing the day of the week using one-hot encoding. This results in an ARIX(7,1,0) model, defined as follows:
 
 $$
 Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + ... + \phi_7 Y_{t-7} + \theta_1W_{t1} + \theta_1W_{t2} + ... + \theta_7W_{t7} + \epsilon_t
@@ -18,7 +20,7 @@ $$
 
 Where:
  - Y_t: The predicted value at time t.
- - Y_t-n: The value at time t-n, where n ranges from 1 to 7.
+ - Y_t-n:   The value at time t-n, where n ranges from 1 to 7.
  - w_i: One-hot encoded feature representing the day of the week (i = 1 to 7, corresponding to Monday through Sunday).
  - e_t: The error term at time t.
 
@@ -33,7 +35,7 @@ Lets start by creating a view with data for each time series in array. For test 
 Now train our models and store then in a memory engine table.
 <img src="images/q2.png" width=60% height=60%>
 
-More comments and details about the code can be found in the code https://github.com/pzlav/time-sereies-prediction-in-ClickHouse
+More comments and details about the code can be found here https://github.com/pzlav/time-sereies-prediction-in-ClickHouse
 
 
 ---
